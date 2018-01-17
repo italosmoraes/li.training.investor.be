@@ -2,55 +2,84 @@
 
 namespace Investor;
 
-use Investor\Tranche;
 use DateTime;
 
-class Investment {
-
+class Investment
+{
     /**
      * @var string
      */
     private $id;
-    /**
-     * @var string
-     */
-    private $loan;
+
     /**
      * @var Tranche
      */
     private $tranche;
+
     /**
      * @var float
      */
     private $amount;
+
     /**
-     * @var Date
+     * @var \DateTime
      */
     private $date;
 
-    public function __construct($loan, $tranche, $amount, DateTime $date){
+    /**
+     * @var Investor
+     */
+    private $investor;
+
+    /**
+     * @param Investor $investor
+     * @param \Investor\Tranche $tranche
+     * @param float $amount
+     * @param DateTime $date
+     */
+    public function __construct(Investor $investor, Tranche $tranche, float $amount, DateTime $date)
+    {
         $this->id = bin2hex(random_bytes(10));
-        $this->loan = $loan;
         $this->tranche = $tranche;
         $this->amount = $amount;
         $this->date = $date;
+        $this->investor = $investor;
     }
 
-    public function getTranche() : Tranche{
+    /**
+     * @return \Investor\Tranche
+     */
+    public function getTranche() : Tranche
+    {
         return $this->tranche;
     }
 
-    public function getAmount(){
+    /**
+     * @return float
+     */
+    public function getAmount()
+    {
         return $this->amount;
     }
 
-    public function getId(){
+    /**
+     * @return string
+     */
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getDate() : DateTime{
+    public function getDate() : DateTime
+    {
         return $this->date;
     }
 
-
+    /**
+     * @return Investor
+     */
+    public function getInvestor()
+    {
+        return $this->investor;
+    }
 }

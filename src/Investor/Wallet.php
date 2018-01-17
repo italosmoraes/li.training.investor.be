@@ -4,41 +4,60 @@ namespace Investor;
 
 use Exception;
 
-class Wallet {
-
+class Wallet
+{
     /**
      * @var string
      */
     private $id;
+
     /**
      * @var float
      */
     private $amount;
 
-    public function __construct(string $id, float $amount = 0.00){
+    /**
+     * Wallet constructor.
+     * @param string $id
+     * @param float $amount
+     */
+    public function __construct(string $id, float $amount = 0.00)
+    {
         $this->id = $id;
         $this->amount = $amount;
     }
 
-    public function getAmount(){
+    /**
+     * @return float
+     */
+    public function getAmount()
+    {
         return $this->amount;
     }
 
-    public function addMoney($amount){
-        if ($amount > 0){
+    /**
+     * @param $amount
+     * @throws Exception
+     */
+    public function credit($amount)
+    {
+        if ($amount > 0) {
             $this->amount = $this->amount + $amount;
         } else {
             throw new Exception("invalid credit amount");
         }
     }
 
-    public function debit($amount){
-        if ($amount > 0 && $amount <= $this->amount){
+    /**
+     * @param $amount
+     * @throws Exception
+     */
+    public function debit($amount)
+    {
+        if ($amount > 0 && $amount <= $this->amount) {
             $this->amount = $this->amount - $amount;
         } else {
             throw new Exception("invalid debit amount");
         }
     }
-
-
 }

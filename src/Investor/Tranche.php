@@ -2,46 +2,99 @@
 
 namespace Investor;
 
-class Tranche {
+class Tranche
+{
+    /**
+     * @var Loan
+     */
+    private $loan;
 
     /**
      * @var string
      */
     private $name;
+
     /**
      * @var float
      */
     private $amountAvailable;
-     /**
-     * @var float
-     */
+
+    /**
+    * @var float
+    */
     private $rate;
 
-    public function __construct(string $name, float $amount = 0.0, float $rate = 0.0){
+    /**
+     * @var array
+     */
+    private $investments;
+
+    /**
+     * Tranche constructor.
+     * @param Loan $loan
+     * @param string $name
+     * @param float $amount
+     * @param float $rate
+     */
+    public function __construct(Loan $loan, string $name, float $amount, float $rate)
+    {
+        $this->loan = $loan;
         $this->name = $name;
         $this->amountAvailable = $amount;
         $this->rate = $rate;
+        $this->investments = array();
     }
 
-    public function makeInvestment($amount){
+    /**
+     * @param Investor $investor
+     * @param float $amount
+     * @param \DateTime $date
+     * @return Investment
+     * @throws DomainException
+     */
+    public function makeInvestment(Investor $investor, float $amount, \DateTime $date)
+    {
+        if($amount > $this->getAmountAvailable()) {
+            throw new DomainException('Amount not available');
+        }
+
         $this->amountAvailable = $this->amountAvailable - $amount;
+
+        $investment = new Investment($investor, $this, $amount, $date);
+        $this->investments[] = $investment;
+
+        return $investment;
     }
 
-    public function getAmountAvailable(){
+    /**
+     * @return array
+     */
+    public function getInvestements()
+    {
+        return $this->investments;
+    }
+
+    /**
+     * @return float
+     */
+    public function getAmountAvailable()
+    {
         return $this->amountAvailable;
     }
 
-    public function getName(){
+    /**
+     * @return string
+     */
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setRate($rate){
-        $this->rate = $rate;
-    }
-
-    public function getRate(){
+    /**
+     * @return float
+     */
+    public function getRate()
+    {
         return $this->rate;
     }
-    
-
 }

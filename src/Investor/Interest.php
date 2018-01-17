@@ -4,7 +4,8 @@ namespace Investor;
 
 use DateTime;
 
-class Interest {
+class Interest
+{
 
     /**
      * @var float
@@ -19,16 +20,15 @@ class Interest {
      */
     private $period;
 
-    public function __construct($amount, $investmentId, $period){
+    public function __construct($amount, $investmentId, $period)
+    {
         $this->amount = $amount;
         $this->investmentId = $investmentId;
         $this->period = $period;
     }
 
-    public function getAmount(){
+    public function getAmount()
+    {
         return $this->amount;
     }
-
-
-
 }
